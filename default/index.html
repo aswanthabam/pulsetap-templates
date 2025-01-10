@@ -1,100 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{fullname}} - PulseTap</title>
-    <link rel="stylesheet" href="/templates/default/style.css" />
-    <script src="https://unpkg.com/lucide@latest"></script>
-  </head>
-  <body>
-    <div class="container">
-      <div class="profile-card">
-        <div class="card-content">
-          <!-- Profile Image -->
-          <div class="profile-image">
-            {% if profile_picture %}
-            <img
-              src="{{profile_picture.small_url}}"
-              alt="{{profile_picture.alt_text}}"
-            />
-            {% else %}
-            <img
-              src="/templates/default/user.png"
-              alt="{{fullname}}"
-              class="profile-icon"
-            />
-            {% endif %}
-          </div>
 
-          <!-- Profile Info -->
-          <div class="profile-info">
-            <h2>{{fullname}}</h2>
-            <p class="title">{{organization.designation}}</p>
-            <p class="location">{{organization.name}}</p>
-          </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{fullname}} - PulseTap</title>
+  <link rel="stylesheet" href="/templates/default/style.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
 
-          <!-- Save Contact Button -->
-          {% if contact.phone %}
-          <button class="save-contact-btn">
-            <i data-lucide="user-plus"></i>
-            Save Contact
-          </button>
+  <script src="https://cdn.jsdelivr.net/npm/vcards-js@2.10.0/index.min.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="profile-card">
+      <div class="card-content">
+        <!-- Profile Image -->
+        {% if banner %}
+        <img class="profile-banner" src="{{banner.medium_url}}" alt="{{banner.alt_text}}" />
+        {% endif %}
+        <div class="profile-image {% if banner %}has-banner{%endif%}">
+          {% if profile_picture %}
+          <img src="{{profile_picture.small_url}}" alt="{{profile_picture.alt_text}}" class="profile-icon" />
+          {% else %}
+          <img src="/templates/common/user.png" alt="{{fullname}}" class="profile-icon" />
           {% endif %}
+        </div>
 
-          <!-- Contact Info -->
-          <div class="contact-info">
-            {% if contact.email %}
-            <a href="mailto:{{contact.email}}" class="contact-item">
-              <i data-lucide="mail"></i>
-              <span>{{contact.email}}</span>
+        <!-- Profile Info -->
+        <div class="profile-info">
+          <h2>{{fullname}}</h2>
+          <p class="title">{{organization.designation}}</p>
+          <p class="location">{{organization.name}}</p>
+        </div>
+
+        <!-- Save Contact Button -->
+        {% if contact.phone %}
+        <button class="save-contact-btn">
+          <i data-lucide="user-plus"></i>
+          Save Contact
+        </button>
+        {% endif %}
+
+        <!-- Contact Info -->
+        <div class="contact-info">
+          {% if contact.email %}
+          <a href="mailto:{{contact.email}}" class="contact-item">
+            <i data-lucide="mail"></i>
+            <span>{{contact.email}}</span>
+          </a>
+          {% endif %} {% if contact.phone %}
+          <a href="tel:{{contact.phone}}" class="contact-item">
+            <i data-lucide="phone"></i>
+            <span>{{contact.phone}}</span>
+          </a>
+          {% endif %} {% if address %}
+          <a href="{% if map_link %}{{map_link}}{%else%}https://www.google.com/maps/search/?api=1&query={{address}}{%endif%}"
+            class="contact-item" target="_blank">
+            <i data-lucide="map-pin"></i>
+            <span>{{address| replace('\n', '<br />') | safe}}</span>
+          </a>
+          {% endif %}
+        </div>
+
+        <!-- Social Links -->
+        <div class="social-links-container">
+          <div class="social-links">
+            {% if socials %} {% for link in socials %}
+            <a target="_blank" href="{{link.url}}" class="social-link">
+              <i data-lucide="{{link.name}}"></i>
+              <div class="social-text">
+                <p class="social-title">{{link.name.title()}}</p>
+                <p class="social-handle">@{{link.username}}</p>
+              </div>
             </a>
-            {% endif %} {% if contact.phone %}
-            <a href="tel:{{contact.phone}}" class="contact-item">
-              <i data-lucide="phone"></i>
-              <span>{{contact.phone}}</span>
-            </a>
-            {% endif %}
-          </div>
-
-          <!-- Social Links -->
-          <div class="social-links-container">
-            <div class="social-links">
-              {% if socials %} {% for link in socials %}
-              <a href="{{link.url}}" class="social-link">
-                <i data-lucide="{{link.name}}"></i>
-                <div class="social-text">
-                  <p class="social-title">{{link.name.title()}}</p>
-                  <p class="social-handle">@{{link.username}}</p>
-                </div>
-              </a>
-              {% endfor %} {% endif %}
-            </div>
-          </div>
-
-          <!-- About Section -->
-          <div class="about-section">
-            <h3>About</h3>
-            <p>{{bio}}</p>
+            {% endfor %} {% endif %}
           </div>
         </div>
-        <footer class="footer">
-          <a
-            href="https://pulsetap.in"
-            target="_blank"
-            rel="noopener noreferrer"
-            >pulsetap.in</a
-          >
-        </footer>
+
+        {% if bio %}
+        <!-- About Section -->
+        <div class="about-section">
+          <h3>About</h3>
+          <p>{{bio}}</p>
+        </div>
+        {% endif %}
       </div>
+      <footer class="footer">
+        <a href="https://pulsetap.in" target="_blank" rel="noopener noreferrer">pulsetap.in</a>
+      </footer>
     </div>
-    <script>
-      const contact = {{ contact|tojson }};
-      const fullname = "{{ fullname }}";
-      const organization = {{ organization|tojson }};
-      const profilePic = "{{ profile_picture.small_url }}";
-      const bio = "{{ bio }}";
-    </script>
-    <script src="/templates/default/script.js"></script>
-  </body>
+  </div>
+  <script>
+    const contact = {{ contact| tojson }};
+    const fullname = "{{ fullname }}";
+    const organization = {{ organization| tojson }};
+    const socials = {{ socials| tojson }};
+    const profilePic = "{{ profile_picture.small_url }}";
+    const bio = "{{ bio }}";
+    const profile_id = "{{ id }}"
+    const address = {{ address | tojson}};
+  </script>
+  <script src="/templates/default/script.js"></script>
+  <script src="/templates/common/script.js" type="module"></script>
+</body>
+
 </html>
