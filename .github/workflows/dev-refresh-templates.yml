@@ -1,0 +1,62 @@
+name: Refresh Templates
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  call_api:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Read Changes File and Check if Empty
+      - name: Read and Check Changes File
+        id: read_changes
+        run: |
+          if [ ! -f changes.json ]; then
+            echo "Error: changes.json file not found!"
+            exit 1
+          fi
+          CHANGES=$(cat changes.json)
+          if [[ "$CHANGES" == "[]" || -z "$CHANGES" ]]; then
+            echo "No changes detected, skipping further steps."
+            exit 0
+          fi
+          echo "changes=$CHANGES" >> $GITHUB_ENV
+
+      # Step 3: Configure SSH key (only runs if Step 2 was successful)
+      - name: Configure SSH key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.DEV_SSH_PRIVATE_KEY }}
+
+      # Step 4: Copy templates (only runs if Step 2 was successful)
+      - name: Copy templates
+        env:
+          REMOTE_IP: ${{ secrets.DEV_REMOTE_IP }}
+          USER: ${{ secrets.DEV_REMOTE_USER }}
+          PROJECT_PATH: ${{ secrets.PROJECT_PATH }}
+        run: |
+          rsync -avz --delete \
+            --exclude='changes.json' \
+            --exclude='.github' \
+            --exclude='.git/' \
+            -e "ssh -o StrictHostKeyChecking=no" ./ $USER@$REMOTE_IP:$PROJECT_PATH
+
+      # Step 5: Call API (only runs if Step 2 was successful)
+      - name: Call API
+        env:
+          API_URL: ${{ secrets.DEV_API_URL }}
+          API_KEY: ${{ secrets.DEV_API_KEY }}
+          CHANGES: ${{ env.changes }}
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer $API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{"changes": '"$CHANGES"'}' \
+            "$API_URL/api/template/refresh"
