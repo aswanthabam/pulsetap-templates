@@ -44,10 +44,9 @@ jobs:
             --exclude='.git/' \
             -e "ssh -o StrictHostKeyChecking=no" ./ $USER@$REMOTE_IP:$PROJECT_PATH/backend/profile_templates
 
+          ssh -o StrictHostKeyChecking=no $USER@$REMOTE_IP <<EOF
           cd $PROJECT_PATH
-
           docker compose exec backend /bin/bash -c "mkdir -p /backend/media/templates && cp -r /backend/profile_templates/* /backend/media/templates/"
-
           EOF
 
       - name: Install Node.js and dependencies
