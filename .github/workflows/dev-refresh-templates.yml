@@ -48,15 +48,19 @@ jobs:
             --exclude='.git/' \
             -e "ssh -o StrictHostKeyChecking=no" ./ $USER@$REMOTE_IP:$PROJECT_PATH
 
-      # Step 5: Call API (only runs if Step 2 was successful)
-      - name: Call API
+      - name: Install Node.js and dependencies
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+
+      - name: Install node-fetch
+        run: |
+          npm install node-fetch
+
+      - name: Call API using JavaScript fetch
         env:
-          API_URL: ${{ vars.DEV_API_URL }}
-          API_KEY: ${{ secrets.DEV_API_KEY }}
+          API_URL: ${{ vars.DEV_API_URL }} # Accessing the API URL from GitHub variables
+          API_KEY: ${{ secrets.DEV_API_KEY }} # API key still comes from secrets
           CHANGES: ${{ env.changes }}
         run: |
-          curl -X POST \
-            -H "Authorization: Bearer $API_KEY" \
-            -H "Content-Type: application/json" \
-            -d '{"changes": '"$CHANGES"'}' \
-            "$API_URL/api/template/refresh"
+          node .github/scripts/send-api-request.js
