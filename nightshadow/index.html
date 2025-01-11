@@ -116,11 +116,22 @@
         padding: 15px;
         border-radius: 10px;
         background-color: #1e1e1e;
+        align-items: center;
+        justify-content: center;
         border: none;
         color: white;
         gap: 10px;
         cursor: pointer;
         transition: background-color 0.3s;
+      }
+
+      .save-contact-btn {
+        font-weight: 500;
+        transition: background-color 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
       }
 
       .action-button:hover {
@@ -304,8 +315,17 @@
           </div>
           {%endif%}
         </div>
+        <footer class="footer">
+          <a
+            href="https://pulsetap.in"
+            target="_blank"
+            rel="noopener noreferrer"
+            >pulsetap.in</a
+          >
+        </footer>
       </div>
     </div>
+
     <script>
       const contact = {{ contact| tojson }};
       const fullname = "{{ fullname }}";
