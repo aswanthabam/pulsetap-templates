@@ -16,7 +16,7 @@ fetch(apiUrl, {
     Authorization: `Bearer ${apiKey}`,
     "Content-Type": "application/json",
   },
-  body: JSON.stringify({ changes }),
+  body: JSON.stringify(changes),
 })
   .then((response) => response.json())
   .then((data) => {

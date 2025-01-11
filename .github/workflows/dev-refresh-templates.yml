@@ -23,10 +23,6 @@ jobs:
             exit 1
           fi
           CHANGES=$(cat changes.json | jq -c .)
-          if [[ "$CHANGES" == "[]" || -z "$CHANGES" ]]; then
-            echo "No changes detected, skipping further steps."
-            exit 0
-          fi
           echo "changes=$CHANGES" >> $GITHUB_ENV
 
       # Step 3: Configure SSH key (only runs if Step 2 was successful)
