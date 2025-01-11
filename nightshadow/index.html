@@ -225,15 +225,15 @@
               <i>📧</i>
               <div>
                 <div>{{contact.email}}</div>
-                <div class="contact-label">Work</div>
+                <!-- <div class="contact-label">Work</div> -->
               </div>
             </div>
             {%endif%} {% if contact.phone %}
             <div class="contact-item">
               <i>📱</i>
               <div>
-                <div>+1 (555) 123-4567</div>
-                <div class="contact-label">Mobile</div>
+                <div>{{contact.phone}}</div>
+                <!-- <div class="contact-label">Mobile</div> -->
               </div>
             </div>
             {%endif%} {% if address %}
@@ -241,7 +241,7 @@
               <i>📍</i>
               <div>
                 <div>{{address}}</div>
-                <div class="contact-label">Office</div>
+                <!-- <div class="contact-label">Office</div> -->
               </div>
             </div>
             {%endif%}
@@ -303,41 +303,16 @@
         </div>
       </div>
     </div>
-
     <script>
-      document
-        .getElementById("addContact")
-        .addEventListener("click", function () {
-          // Handle adding contact
-          alert("Contact added to your contacts!");
-        });
-
-      document
-        .getElementById("shareContact")
-        .addEventListener("click", function () {
-          // Handle sharing contact
-          if (navigator.share) {
-            navigator
-              .share({
-                title: "Sarah Anderson",
-                text: "Check out Sarah's profile",
-                url: window.location.href,
-              })
-              .catch((error) => console.log("Error sharing", error));
-          } else {
-            alert("Share feature not supported on this browser");
-          }
-        });
-
-      // Add hover effect to social icons
-      document.querySelectorAll(".social-icon").forEach((icon) => {
-        icon.addEventListener("mouseenter", function () {
-          this.style.transform = "scale(1.1)";
-        });
-        icon.addEventListener("mouseleave", function () {
-          this.style.transform = "scale(1)";
-        });
-      });
+      const contact = {{ contact| tojson }};
+      const fullname = "{{ fullname }}";
+      const organization = {{ organization| tojson }};
+      const socials = {{ socials| tojson }};
+      const profilePic = "{{ profile_picture.small_url }}";
+      const bio = "{{ bio }}";
+      const profile_id = "{{ id }}"
+      const address = {{ address | tojson}};
     </script>
+    <script src="/templates/common/script.js" type="module"></script>
   </body>
 </html>
