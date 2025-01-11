@@ -51,7 +51,7 @@ jobs:
       # Step 5: Call API (only runs if Step 2 was successful)
       - name: Call API
         env:
-          API_URL: ${{ secrets.DEV_API_URL }}
+          API_URL: ${{ vars.DEV_API_URL }}
           API_KEY: ${{ secrets.DEV_API_KEY }}
           CHANGES: ${{ env.changes }}
         run: |
