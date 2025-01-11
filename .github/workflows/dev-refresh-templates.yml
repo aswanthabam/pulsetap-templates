@@ -22,7 +22,7 @@ jobs:
             echo "Error: changes.json file not found!"
             exit 1
           fi
-          CHANGES=$(cat changes.json)
+          CHANGES=$(cat changes.json | jq -c .)
           if [[ "$CHANGES" == "[]" || -z "$CHANGES" ]]; then
             echo "No changes detected, skipping further steps."
             exit 0
