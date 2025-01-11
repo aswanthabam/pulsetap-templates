@@ -1,5 +1,5 @@
-// .github/scripts/send-api-request.js
-const fetch = require("node-fetch");
+// .github/scripts/send-api-request.mjs
+import fetch from "node-fetch";
 
 const apiUrl = process.env.API_URL + "/api/template/refresh";
 const apiKey = process.env.API_KEY;
