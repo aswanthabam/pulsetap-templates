@@ -55,7 +55,7 @@ jobs:
 
       - name: Install node-fetch
         run: |
-          npm install node-fetch
+          npm install node-fetch@2
 
       - name: Call API using JavaScript fetch
         env:
