@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Profile Page</title>
+    <title>{{fullname}} - PulseTap</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
       * {
         margin: 0;
@@ -18,12 +19,34 @@
         color: #ffffff;
       }
 
+      .container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+      }
+      .container .profile-card {
+        max-width: 390px;
+        border-radius: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        overflow: hidden;
+        position: relative;
+      }
       .banner {
         height: 200px;
         background: linear-gradient(45deg, #2a2a2a, #3a3a3a);
         position: relative;
       }
-
+      .profile-banner {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
       .profile-container {
         max-width: 600px;
         margin: 0 auto;
@@ -94,6 +117,7 @@
         background-color: #1e1e1e;
         border: none;
         color: white;
+        gap: 10px;
         cursor: pointer;
         transition: background-color 0.3s;
       }
@@ -163,83 +187,119 @@
     </style>
   </head>
   <body>
-    <div class="banner">
-      <img
-        src="/placeholder.svg?height=150&width=150"
-        alt="Profile Picture"
-        class="profile-picture"
-      />
-    </div>
+    <div class="container">
+      <div class="profile-card">
+        <div class="banner">
+          {% if banner %}
+          <img
+            class="profile-banner"
+            src="{{banner.medium_url}}"
+            alt="{{banner.alt_text}}"
+          />
+          {% endif %} {% if profile_picture %}
+          <img
+            class="profile-picture"
+            src="{{profile_picture.small_url}}"
+            alt="{{profile_picture.alt_text}}"
+            class="profile-icon"
+          />
+          {% else %}
+          <img
+            class="profile-picture"
+            src="/templates/common/user.png"
+            alt="{{fullname}}"
+            class="profile-icon"
+          />
+          {% endif %}
+        </div>
 
-    <div class="profile-container">
-      <div class="profile-info">
-        <h1 class="profile-name">Sarah Anderson</h1>
-        <div class="profile-title">Software Developer</div>
-      </div>
-
-      <div class="contact-info">
-        <div class="contact-item">
-          <i>📧</i>
-          <div>
-            <div>sarah.anderson@example.com</div>
-            <div class="contact-label">Work</div>
+        <div class="profile-container">
+          <div class="profile-info">
+            <h1 class="profile-name">{{fullname}}</h1>
+            <div class="profile-title">{{organization.designation}}</div>
           </div>
-        </div>
-        <div class="contact-item">
-          <i>📱</i>
-          <div>
-            <div>+1 (555) 123-4567</div>
-            <div class="contact-label">Mobile</div>
+
+          {% if contact.email %}
+          <div class="contact-info">
+            <div class="contact-item">
+              <i>📧</i>
+              <div>
+                <div>{{contact.email}}</div>
+                <div class="contact-label">Work</div>
+              </div>
+            </div>
+            {%endif%} {% if contact.phone %}
+            <div class="contact-item">
+              <i>📱</i>
+              <div>
+                <div>+1 (555) 123-4567</div>
+                <div class="contact-label">Mobile</div>
+              </div>
+            </div>
+            {%endif%} {% if address %}
+            <div class="contact-item">
+              <i>📍</i>
+              <div>
+                <div>{{address}}</div>
+                <div class="contact-label">Office</div>
+              </div>
+            </div>
+            {%endif%}
           </div>
-        </div>
-      </div>
 
-      <div class="action-buttons">
-        <button class="action-button" id="addContact">Add to Contacts</button>
-        <button class="action-button" id="shareContact">Share Contact</button>
-      </div>
-
-      <div class="social-icons">
-        <div class="social-icon">in</div>
-        <div class="social-icon">tw</div>
-        <div class="social-icon">fb</div>
-        <div class="social-icon">ig</div>
-        <div class="social-icon">tk</div>
-      </div>
-
-      <div class="about-section">
-        <h2 class="section-title">About</h2>
-        <p>
-          Passionate software developer with expertise in web technologies.
-          Creating innovative solutions and sharing knowledge through writing
-          and speaking at tech conferences.
-        </p>
-      </div>
-
-      <div class="blog-section">
-        <h2 class="section-title">Blog & Social</h2>
-        <div class="blog-post">
-          <h3 class="blog-post-title">Understanding Modern Web Architecture</h3>
-          <div class="blog-post-date">Posted on Medium • 2 days ago</div>
-          <p class="blog-post-preview">
-            An in-depth look at how modern web applications are built and
-            deployed in 2024...
-          </p>
-        </div>
-        <div class="blog-post">
-          <h3 class="blog-post-title">5 Tips for Better Code Reviews</h3>
-          <div class="blog-post-date">Posted on Dev.to • 1 week ago</div>
-          <p class="blog-post-preview">
-            Code reviews are essential for maintaining code quality. Here are my
-            top tips...
-          </p>
-        </div>
-        <div class="blog-post">
-          <h3 class="blog-post-title">Latest: New Project Launch! 🚀</h3>
-          <div class="blog-post-date">Posted on Twitter • 3 hours ago</div>
-          <p class="blog-post-preview">
-            Excited to announce the launch of my latest open-source project...
-          </p>
+          <div class="action-buttons">
+            <!-- <button class="action-button save-contact-btn" id="addContact">
+              RSVP
+            </button> -->
+            <button class="action-button save-contact-btn" id="shareContact">
+              <i data-lucide="user-plus"></i>
+              Save Contact
+            </button>
+          </div>
+          {% if socials %}
+          <div class="social-icons">
+            {% for link in socials %}
+            <a class="social-icon" target="_blank" href="{{link.url}}">
+              <i data-lucide="{{link.name}}"></i>
+            </a>
+            {% endfor %}
+          </div>
+          {% endif %} {% if bio %}
+          <div class="about-section">
+            <h2 class="section-title">About</h2>
+            <p>{{bio}}</p>
+          </div>
+          {%endif%} {% if blogs %}
+          <div class="blog-section">
+            <h2 class="section-title">Blog & Social</h2>
+            <div class="blog-post">
+              <h3 class="blog-post-title">
+                Understanding Modern Web Architecture
+              </h3>
+              <div class="blog-post-date">Posted on Medium • 2 days ago</div>
+              <p class="blog-post-preview">
+                An in-depth look at how modern web applications are built and
+                deployed in 2024...
+              </p>
+            </div>
+            <div class="blog-post">
+              <h3 class="blog-post-title">5 Tips for Better Code Reviews</h3>
+              <div class="blog-post-date">Posted on Dev.to • 1 week ago</div>
+              <p class="blog-post-preview">
+                Code reviews are essential for maintaining code quality. Here
+                are my top tips...
+              </p>
+            </div>
+            <div class="blog-post">
+              <h3 class="blog-post-title">Latest: New Project Launch! 🚀</h3>
+              <div class="blog-post-date">Posted on Twitter • 3 hours ago</div>
+              <p class="blog-post-preview">
+                Excited to announce the launch of my latest open-source
+                project...
+              </p>
+            </div>
+          </div>
+          {%endif%}
         </div>
       </div>
     </div>
