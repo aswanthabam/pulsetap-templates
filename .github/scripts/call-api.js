@@ -20,7 +20,7 @@ fetch(apiUrl, {
 })
   .then((response) => response.json())
   .then((data) => {
-    console.log("API Response:", data);
+    console.log("API Response:", JSON.stringify(data, 4));
   })
   .catch((error) => {
     console.error("Error:", error);
