@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile Page</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+      }
+
+      body {
+        background-color: #121212;
+        color: #ffffff;
+      }
+
+      .banner {
+        height: 200px;
+        background: linear-gradient(45deg, #2a2a2a, #3a3a3a);
+        position: relative;
+      }
+
+      .profile-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .profile-picture {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        border: 4px solid #121212;
+        position: absolute;
+        bottom: -75px;
+        left: 50%;
+        transform: translateX(-50%);
+        object-fit: cover;
+      }
+
+      .profile-info {
+        margin-top: 90px;
+        text-align: center;
+      }
+
+      .profile-name {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .profile-title {
+        color: #888;
+        margin-bottom: 30px;
+      }
+
+      .contact-info {
+        margin-bottom: 30px;
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        background-color: #1e1e1e;
+        border-radius: 10px;
+        margin-bottom: 10px;
+      }
+
+      .contact-item i {
+        margin-right: 15px;
+        color: #888;
+      }
+
+      .contact-label {
+        color: #888;
+        font-size: 12px;
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 30px;
+      }
+
+      .action-button {
+        flex: 1;
+        padding: 15px;
+        border-radius: 10px;
+        background-color: #1e1e1e;
+        border: none;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .action-button:hover {
+        background-color: #2a2a2a;
+      }
+
+      .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 30px;
+      }
+
+      .social-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #1e1e1e;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .social-icon:hover {
+        background-color: #2a2a2a;
+      }
+
+      .section-title {
+        font-size: 20px;
+        margin-bottom: 15px;
+      }
+
+      .about-section {
+        margin-bottom: 30px;
+      }
+
+      .blog-section {
+        margin-bottom: 30px;
+      }
+
+      .blog-post {
+        background-color: #1e1e1e;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+
+      .blog-post-title {
+        font-size: 16px;
+        margin-bottom: 5px;
+      }
+
+      .blog-post-date {
+        color: #888;
+        font-size: 12px;
+        margin-bottom: 10px;
+      }
+
+      .blog-post-preview {
+        color: #ccc;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="banner">
+      <img
+        src="/placeholder.svg?height=150&width=150"
+        alt="Profile Picture"
+        class="profile-picture"
+      />
+    </div>
+
+    <div class="profile-container">
+      <div class="profile-info">
+        <h1 class="profile-name">Sarah Anderson</h1>
+        <div class="profile-title">Software Developer</div>
+      </div>
+
+      <div class="contact-info">
+        <div class="contact-item">
+          <i>📧</i>
+          <div>
+            <div>sarah.anderson@example.com</div>
+            <div class="contact-label">Work</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <i>📱</i>
+          <div>
+            <div>+1 (555) 123-4567</div>
+            <div class="contact-label">Mobile</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button class="action-button" id="addContact">Add to Contacts</button>
+        <button class="action-button" id="shareContact">Share Contact</button>
+      </div>
+
+      <div class="social-icons">
+        <div class="social-icon">in</div>
+        <div class="social-icon">tw</div>
+        <div class="social-icon">fb</div>
+        <div class="social-icon">ig</div>
+        <div class="social-icon">tk</div>
+      </div>
+
+      <div class="about-section">
+        <h2 class="section-title">About</h2>
+        <p>
+          Passionate software developer with expertise in web technologies.
+          Creating innovative solutions and sharing knowledge through writing
+          and speaking at tech conferences.
+        </p>
+      </div>
+
+      <div class="blog-section">
+        <h2 class="section-title">Blog & Social</h2>
+        <div class="blog-post">
+          <h3 class="blog-post-title">Understanding Modern Web Architecture</h3>
+          <div class="blog-post-date">Posted on Medium • 2 days ago</div>
+          <p class="blog-post-preview">
+            An in-depth look at how modern web applications are built and
+            deployed in 2024...
+          </p>
+        </div>
+        <div class="blog-post">
+          <h3 class="blog-post-title">5 Tips for Better Code Reviews</h3>
+          <div class="blog-post-date">Posted on Dev.to • 1 week ago</div>
+          <p class="blog-post-preview">
+            Code reviews are essential for maintaining code quality. Here are my
+            top tips...
+          </p>
+        </div>
+        <div class="blog-post">
+          <h3 class="blog-post-title">Latest: New Project Launch! 🚀</h3>
+          <div class="blog-post-date">Posted on Twitter • 3 hours ago</div>
+          <p class="blog-post-preview">
+            Excited to announce the launch of my latest open-source project...
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("addContact")
+        .addEventListener("click", function () {
+          // Handle adding contact
+          alert("Contact added to your contacts!");
+        });
+
+      document
+        .getElementById("shareContact")
+        .addEventListener("click", function () {
+          // Handle sharing contact
+          if (navigator.share) {
+            navigator
+              .share({
+                title: "Sarah Anderson",
+                text: "Check out Sarah's profile",
+                url: window.location.href,
+              })
+              .catch((error) => console.log("Error sharing", error));
+          } else {
+            alert("Share feature not supported on this browser");
+          }
+        });
+
+      // Add hover effect to social icons
+      document.querySelectorAll(".social-icon").forEach((icon) => {
+        icon.addEventListener("mouseenter", function () {
+          this.style.transform = "scale(1.1)";
+        });
+        icon.addEventListener("mouseleave", function () {
+          this.style.transform = "scale(1)";
+        });
+      });
+    </script>
+  </body>
+</html>

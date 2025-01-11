@@ -1,0 +1,67 @@
+name: Prod Refresh Templates
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  call_api:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Read Changes File and Check if Empty
+      - name: Read and Check Changes File
+        id: read_changes
+        run: |
+          if [ ! -f changes.json ]; then
+            echo "Error: changes.json file not found!"
+            exit 1
+          fi
+          CHANGES=$(cat changes.json | jq -c .)
+          echo "changes=$CHANGES" >> $GITHUB_ENV
+
+      # Step 3: Configure SSH key (only runs if Step 2 was successful)
+      - name: Configure SSH key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.PROD_SSH_PRIVATE_KEY }}
+
+      # Step 4: Copy templates (only runs if Step 2 was successful)
+      - name: Copy templates
+        env:
+          REMOTE_IP: ${{ secrets.PROD_REMOTE_IP }}
+          USER: ${{ secrets.PROD_REMOTE_USER }}
+          PROJECT_PATH: ${{ secrets.PROJECT_PATH }}
+        run: |
+          rsync -avz --delete \
+            --exclude='changes.json' \
+            --exclude='.github' \
+            --exclude='.git/' \
+            -e "ssh -o StrictHostKeyChecking=no" ./ $USER@$REMOTE_IP:$PROJECT_PATH/backend/profile_templates
+
+          ssh -o StrictHostKeyChecking=no $USER@$REMOTE_IP <<EOF
+          cd $PROJECT_PATH
+          docker compose exec backend /bin/bash -c "mkdir -p /backend/media/templates && cp -r /backend/profile_templates/* /backend/media/templates/"
+          EOF
+
+      - name: Install Node.js and dependencies
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+
+      - name: Install node-fetch
+        run: |
+          npm install node-fetch@2
+
+      - name: Call API using JavaScript fetch
+        env:
+          API_URL: ${{ vars.PROD_API_URL }} # Accessing the API URL from GitHub variables
+          API_KEY: ${{ secrets.PROD_API_KEY }} # API key still comes from secrets
+          CHANGES: ${{ env.changes }}
+        run: |
+          node .github/scripts/call-api.js
