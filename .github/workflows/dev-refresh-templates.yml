@@ -63,4 +63,4 @@ jobs:
           API_KEY: ${{ secrets.DEV_API_KEY }} # API key still comes from secrets
           CHANGES: ${{ env.changes }}
         run: |
-          node .github/scripts/send-api-request.js
+          node .github/scripts/call-api.js
