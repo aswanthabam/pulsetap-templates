@@ -18,11 +18,25 @@ function getMobileOperatingSystem() {
 
 // Function to create vCard data
 function createVCard() {
+  const os = getMobileOperatingSystem();
   let vCard = `BEGIN:VCARD
 VERSION:3.0
+N:${fullname}
 FN:${fullname}
 TITLE:${organization.designation}
-ROLE:${organization.designation}
+ROLE:${organization.designation}`;
+  //   if (os === "Android") {
+  //     vCard += `
+  // TITLE:${organization.designation}
+  // ROLE:${organization.designation}
+  // `;
+  //   } else if (os === "iOS") {
+  //     vCard += `
+  // TITLE:${organization.designation}
+  // ROLE:${organization.designation}
+  // `;
+  //   }
+  vCard += `
 ORG:${organization.name}
 TEL;TYPE=CELL:${contact.phone}
 EMAIL;TYPE=INTERNET:${contact.email}
