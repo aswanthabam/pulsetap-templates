@@ -296,7 +296,12 @@
           <div class="social-icons">
             {% for link in socials %}
             <a class="social-icon" target="_blank" href="{{link.url}}">
-              <i data-lucide="{{link.icon}}"></i>
+              <img
+                src="https://www.pulsetap.in/api/icon?name={{link.icon}}&fill=ffffff"
+                alt="{{link.name}}"
+                width="24"
+                height="24"
+              />
             </a>
             {% endfor %}
           </div>
