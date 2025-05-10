@@ -36,7 +36,7 @@ jobs:
         env:
           REMOTE_IP: ${{ secrets.DEV_REMOTE_IP }}
           USER: ${{ secrets.DEV_REMOTE_USER }}
-          PROJECT_PATH: ${{ secrets.PROJECT_PATH }}
+          PROJECT_PATH: ${{ secrets.DEV_PROJECT_PATH }}
         run: |
           rsync -avz --delete \
             --exclude='changes.json' \
