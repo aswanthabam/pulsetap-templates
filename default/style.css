@@ -98,13 +98,22 @@ body {
   color: rgb(107, 114, 128);
   font-size: 0.875rem;
 }
-
+.profile-info .website {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
 .profile-info .website,
 .profile-info #website-url {
   color: rgb(107, 114, 128);
   text-decoration: none;
   font-weight: 700;
   font-size: 0.875rem;
+}
+.profile-info .website i {
+  width: 0.875rem;
+  height: 0.875rem;
 }
 /* Save Contact Button */
 .save-contact-btn {
