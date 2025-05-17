@@ -97,6 +97,7 @@ body {
 .profile-info .location {
   color: rgb(107, 114, 128);
   font-size: 0.875rem;
+  margin-bottom: 0.25rem;
 }
 .profile-info .website {
   display: flex;
@@ -110,12 +111,6 @@ body {
   text-decoration: none;
   font-weight: 700;
   font-size: 0.875rem;
-}
-.profile-info .website i {
-  font-size: 15px;
-  width: 15px;
-  height: 15px;
-  display: inline-block;
 }
 /* Save Contact Button */
 .save-contact-btn {
