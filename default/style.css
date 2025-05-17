@@ -112,9 +112,10 @@ body {
   font-size: 0.875rem;
 }
 .profile-info .website i {
-  font-size: 0.5rem;
-  width: 0.5rem;
-  height: 0.5rem;
+  font-size: 15px;
+  width: 15px;
+  height: 15px;
+  display: inline-block;
 }
 /* Save Contact Button */
 .save-contact-btn {
