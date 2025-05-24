@@ -1,6 +1,37 @@
 // Initialize Lucide icons
 lucide.createIcons();
 
+// function to get formatted url
+function getFormattedURL(inputUrl) {
+  try {
+    // Ensure the URL has a protocol; required for parsing
+    if (!/^https?:\/\//i.test(inputUrl)) {
+      inputUrl = "http://" + inputUrl;
+    }
+
+    const url = new URL(inputUrl);
+
+    // Split hostname into parts
+    const parts = url.hostname.split(".");
+    let domain = "";
+    let subdomain = "";
+
+    if (parts.length >= 3) {
+      subdomain = parts.slice(0, parts.length - 2).join(".");
+      domain = parts.slice(-2).join(".");
+    } else {
+      domain = url.hostname;
+    }
+
+    const readable = `${subdomain ? subdomain + "." : ""}${domain}${
+      url.pathname !== "/" ? url.pathname : ""
+    }`;
+    return readable;
+  } catch (error) {
+    return "Invalid URL";
+  }
+}
+
 // Function to detect mobile OS
 function getMobileOperatingSystem() {
   const userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -62,6 +93,25 @@ END:VCARD`;
   return vCard;
 }
 
+function formatAnchorURL() {
+  const anchor = document.getElementById("website-url");
+  if (!anchor) return;
+
+  // Fix href to include protocol if missing
+  let href = anchor.getAttribute("href") || "";
+  if (!/^https?:\/\//i.test(href)) {
+    href = "http://" + href;
+    anchor.setAttribute("href", href);
+  }
+
+  // Get text content and format it using your function
+  const text = anchor.textContent.trim();
+  const formatted = getFormattedURL(text);
+
+  // Update anchor text with formatted URL
+  anchor.textContent = formatted;
+}
+
 // Add click handler for save contact button
 document.querySelector(".save-contact-btn").addEventListener("click", () => {
   const vcard = createVCard();
@@ -101,4 +151,5 @@ window.addEventListener("DOMContentLoaded", () => {
     .catch((res) => {
       console.log(res);
     });
+  formatAnchorURL();
 });

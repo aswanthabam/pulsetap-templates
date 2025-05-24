@@ -80,7 +80,24 @@
 
       .profile-title {
         color: #888;
+        margin-bottom: 5px;
+      }
+
+      .website {
+        color: #888;
+        text-decoration: none;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
         margin-bottom: 30px;
+      }
+
+      .website #website-url {
+        color: #888;
+        text-decoration: none;
+        font-weight: 700;
       }
 
       .contact-info {
@@ -253,6 +270,29 @@
           <div class="profile-info">
             <h1 class="profile-name">{{fullname}}</h1>
             <div class="profile-title">{{organization.designation}}</div>
+            {% if website %}
+            <div class="website">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-globe-icon lucide-globe"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+                <path d="M2 12h20" />
+              </svg>
+              <a target="_blank" id="website-url" href="{{website}}"
+                >{{website}}</a
+              >
+            </div>
+            {% endif %}
           </div>
 
           {% if contact.email %}

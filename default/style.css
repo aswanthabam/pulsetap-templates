@@ -97,8 +97,21 @@ body {
 .profile-info .location {
   color: rgb(107, 114, 128);
   font-size: 0.875rem;
+  margin-bottom: 0.25rem;
 }
-
+.profile-info .website {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+}
+.profile-info .website,
+.profile-info #website-url {
+  color: rgb(107, 114, 128);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.875rem;
+}
 /* Save Contact Button */
 .save-contact-btn {
   width: 100%;
