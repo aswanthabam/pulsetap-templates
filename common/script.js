@@ -47,10 +47,11 @@ function createVCard() {
   const CRLF = "\r\n";
 
   // Use the profile website if available, otherwise fall back to current page URL
-  const websiteURL = website
-    ? !/^https?:\/\//i.test(website)
-      ? "http://" + website
-      : website
+  const websiteClean = website && website.trim();
+  const websiteURL = websiteClean
+    ? !/^https?:\/\//i.test(websiteClean)
+      ? "http://" + websiteClean
+      : websiteClean
     : window.location.href;
 
   // N field: Family;Given;Additional;Prefix;Suffix
