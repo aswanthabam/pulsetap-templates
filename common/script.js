@@ -88,8 +88,13 @@ function createVCard() {
         : `;;${address};;;;`;
     lines.push(`ADR;TYPE=WORK:${adrField}`);
   }
-
-  if (profilePic) {
+  if (photo_base64) {
+    const base64Data = photo_base64.startsWith("data:")
+      ? photo_base64.split(",")[1]
+      : photo_base64;
+    lines.push(`PHOTO;ENCODING=b:${base64Data}`);
+  }
+  else if (profilePic) {
     lines.push(`PHOTO;VALUE=uri:${profilePic}`);
   }
 
