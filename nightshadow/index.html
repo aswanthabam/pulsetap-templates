@@ -402,7 +402,8 @@
       const bio = "{{ bio }}";
       const profile_id = "{{ id }}"
       const address = {{ address | tojson}};
-      const website = "{{ website }}";
+      const website = "{{ website or '' }}";
+      const photo_base64 = "{{ photo_base64 or '' }}";
     </script>
     <script src="/templates/common/script.js" type="module"></script>
   </body>
