@@ -120,7 +120,7 @@ function formatAnchorURL() {
   const anchor = document.getElementById("website-url");
   if (!anchor) return;
 
-  let href = website || anchor.getAttribute("href") || anchor.textContent.trim();
+  let href = anchor.getAttribute("href") || anchor.textContent.trim();
   if (!href) return;
 
   if (!/^https?:\/\//i.test(href)) {
